@@ -16,7 +16,6 @@ type Link struct {
 
 var idRegex = regexp.MustCompile("^[abcdefABCDEF0123456789]{16}$")
 var tmpl = template.Must(template.ParseFiles("page.html"))
-var constants = []uint64{uint64(3), uint64(7), uint64(11), uint64(13)}
 
 func pageHandler(w http.ResponseWriter, r *http.Request) {
 	id := r.URL.Query().Get("id")
@@ -30,8 +29,8 @@ func pageHandler(w http.ResponseWriter, r *http.Request) {
 
 		links := make([]Link, len(constants))
 
-		for i, constant := range constants {
-			newNum := num + constant
+		for i := 0; i < 64; i += 1 {
+			newNum := num ^ (0x01 << i)
 			newId := fmt.Sprintf("%08x", newNum)
 			links[i] = Link{
 				Title: newId,
