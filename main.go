@@ -18,6 +18,8 @@ type Link struct {
 var idRegex = regexp.MustCompile("^[abcdefABCDEF0123456789]{16}$")
 var tmpl = template.Must(template.ParseFiles("page.html"))
 
+const domain = "http://localhost:8080"
+
 func pageHandler(w http.ResponseWriter, r *http.Request) {
 	id := r.URL.Query().Get("id")
 	if idRegex.MatchString(id) {
@@ -36,7 +38,7 @@ func pageHandler(w http.ResponseWriter, r *http.Request) {
 			newId := fmt.Sprintf("%08x", newNum)
 			links[shuffle[i]] = Link{
 				Title: newId,
-				Link:  "http://localhost:8080/?id=" + newId,
+				Link:  domain + "/?id=" + newId,
 			}
 		}
 
