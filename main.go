@@ -5,6 +5,7 @@ import (
 	"encoding/hex"
 	"fmt"
 	"html/template"
+	"math/rand"
 	"net/http"
 	"regexp"
 )
@@ -27,12 +28,13 @@ func pageHandler(w http.ResponseWriter, r *http.Request) {
 
 		num := binary.BigEndian.Uint64(bytes)
 
-		links := make([]Link, len(constants))
+		links := make([]Link, 64)
+		shuffle := rand.Perm(64)
 
 		for i := 0; i < 64; i += 1 {
 			newNum := num ^ (0x01 << i)
 			newId := fmt.Sprintf("%08x", newNum)
-			links[i] = Link{
+			links[shuffle[i]] = Link{
 				Title: newId,
 				Link:  "http://localhost:8080/?id=" + newId,
 			}
