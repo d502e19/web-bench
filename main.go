@@ -33,8 +33,8 @@ func pageHandler(w http.ResponseWriter, r *http.Request) {
 		links := make([]Link, 64)
 		shuffle := rand.Perm(64)
 
-		for i := 0; i < 64; i += 1 {
-			newNum := num ^ (0x01 << i)
+		for i := uint64(0); i < 64; i += 1 {
+			newNum := num ^ (uint64(0x01) << i)
 			newId := fmt.Sprintf("%08x", newNum)
 			links[shuffle[i]] = Link{
 				Title: newId,
