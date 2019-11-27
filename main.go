@@ -42,14 +42,23 @@ func pageHandler(w http.ResponseWriter, r *http.Request) {
 			}
 		}
 
-		tmpl.Execute(w, links)
+		err = tmpl.Execute(w, links)
+		if err != nil {
+			panic("Failed to execute template")
+		}
 	} else {
-		fmt.Fprintf(w, "Invalid id")
+		_, err := fmt.Fprintf(w, "Invalid id")
+		if err != nil {
+			panic("Failed to write body")
+		}
 	}
 }
 
 func main() {
 	fmt.Println("vim-go")
 	http.HandleFunc("/", pageHandler)
-	http.ListenAndServe(":8080", nil)
+	err := http.ListenAndServe(":8080", nil)
+	if err != nil {
+		panic(err)
+	}
 }
