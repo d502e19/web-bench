@@ -35,7 +35,7 @@ func pageHandler(w http.ResponseWriter, r *http.Request) {
 
 		for i := uint64(0); i < 64; i += 1 {
 			newNum := num ^ (uint64(0x01) << i)
-			newId := fmt.Sprintf("%08x", newNum)
+			newId := fmt.Sprintf("%016x", newNum)
 			links[shuffle[i]] = Link{
 				Title: newId,
 				Link:  domain + "/?id=" + newId,
