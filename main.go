@@ -86,10 +86,13 @@ func loadGraph(filename string) error {
 }
 
 func main() {
+	// A graph generated using http://pywebgraph.sourceforge.net/
 	err := loadGraph("graph.csv")
 	if err != nil {
 		panic(err)
 	}
+
+	// Starting server simulating the graph
 	fmt.Println("Starting server..")
 	http.HandleFunc("/", pageHandler)
 	err = http.ListenAndServe(":8080", nil)
